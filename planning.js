@@ -8,7 +8,12 @@ function readCsv(filename, delimiter = ',') {
         const data = [];
 
         for (let i = 1; i < rows.length; i++) { // Skip header
-            const row = rows[i].trim();
+            let row = rows[i].trim();
+
+            if (row.includes('#')) {
+                row = row.split('#')[0].trim();
+            }
+            
             if (row) {
                 const columns = row.split(delimiter);
                 data.push(columns);
