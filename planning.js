@@ -24,22 +24,22 @@ function readCsv(filename, delimiter = ',') {
 function validateAndCalculateProfit(flight, airports, aeroplanes) {
     const [ukAirportCode, overseasAirportCode, aircraftType, econSeats, busSeats, firstSeats, econPrice, busPrice, firstPrice] = flight;
 
-        // Find distance from airports data
-        const airportData = airports.find(row => row[0] === overseasAirportCode);
-        if (!airportData) throw new Error(`Invalid airport code: ${overseasAirportCode}`);
+    // Find distance from airports data
+    const airportData = airports.find(row => row[0] === overseasAirportCode);
+    if (!airportData) throw new Error(`Invalid airport code: ${overseasAirportCode}`);
     
-        const distance = (ukAirportCode === 'MAN') ? parseFloat(airportData[2]) : parseFloat(airportData[3]);
+    const distance = (ukAirportCode === 'MAN') ? parseFloat(airportData[2]) : parseFloat(airportData[3]);
     
-        // Find aircraft data
-        const aircraftData = aeroplanes.find(row => row[0] === aircraftType);
-        if (!aircraftData) throw new Error(`Invalid aircraft type: ${aircraftType}`);
+    // Find aircraft data
+    const aircraftData = aeroplanes.find(row => row[0] === aircraftType);
+    if (!aircraftData) throw new Error(`Invalid aircraft type: ${aircraftType}`);
     
-        const runningCost = parseFloat(aircraftData[1].replace('£', '')) / 100;
-        const maxRange = parseFloat(aircraftData[2]);
-        const economySeatsAvailable = parseInt(aircraftData[3]);
-        const businessSeatsAvailable = parseInt(aircraftData[4]);
-        const firstClassSeatsAvailable = parseInt(aircraftData[5]);
-        const totalSeats = (economySeatsAvailable + businessSeatsAvailable + firstClassSeatsAvailable);
+    const runningCost = parseFloat(aircraftData[1].replace('£', '')) / 100;
+    const maxRange = parseFloat(aircraftData[2]);
+    const economySeatsAvailable = parseInt(aircraftData[3]);
+    const businessSeatsAvailable = parseInt(aircraftData[4]);
+    const firstClassSeatsAvailable = parseInt(aircraftData[5]);
+    const totalSeats = (economySeatsAvailable + businessSeatsAvailable + firstClassSeatsAvailable);
    
 
     // Validate aircraft range
@@ -77,7 +77,10 @@ function validateAndCalculateProfit(flight, airports, aeroplanes) {
     const profit = totalIncome - totalCost;
 
     return {
-        
+        flightDetails: flight,
+        income: totalIncome,
+        cost: totalCost,
+        profit: profit,
     };
 }
 
@@ -90,10 +93,12 @@ function processFlights(flights, airports, aeroplanes) {
         try {
             const result = validateAndCalculateProfit(flight, airports, aeroplanes);
             results.push(result);
+        } catch (error) {
+            errorMessages.push(`Flight Data: ${flight.join(', ')} - Error: ${error.message}`);
         }
     });
 
-    return { results,  };
+    return { results, errorMessages };
 }
 
 // Function to write results to a text file
