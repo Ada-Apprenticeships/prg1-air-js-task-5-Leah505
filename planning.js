@@ -128,6 +128,12 @@ function generateFlightReport() {
             // Write results to a text file
             writeResultsToFile(results, 'flight_profitability_report.txt');
 
+            // Display error messages for valid flights
+            if (errorMessages.length > 0) {
+                console.log("Errors encountered in valid flight processing:");
+                errorMessages.forEach(error => console.error(error));
+            }
+
             
             }
         }
@@ -136,7 +142,10 @@ function generateFlightReport() {
         if (airportsData && aeroplanesData && invalidFlightData) {
             const { results: invalidResults, errorMessages: invalidErrorMessages } = processFlights(invalidFlightData, airportsData, aeroplanesData);
 
-
+            // Display error messages for invalid flights
+            if (invalidErrorMessages.length > 0) {
+                console.log("Errors encountered in invalid flight processing:");
+                invalidErrorMessages.forEach(error => console.error(error));
             }
 
         }
