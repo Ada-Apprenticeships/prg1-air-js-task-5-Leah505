@@ -27,20 +27,19 @@ function validateAndCalculateProfit(flight, airports, aeroplanes) {
     // Find distance from airports data
     const airportData = airports.find(row => row[0] === overseasAirportCode);
     if (!airportData) throw new Error(`Invalid airport code: ${overseasAirportCode}`);
-    
+
     const distance = (ukAirportCode === 'MAN') ? parseFloat(airportData[2]) : parseFloat(airportData[3]);
-    
+
     // Find aircraft data
     const aircraftData = aeroplanes.find(row => row[0] === aircraftType);
     if (!aircraftData) throw new Error(`Invalid aircraft type: ${aircraftType}`);
-    
+
     const runningCost = parseFloat(aircraftData[1].replace('£', '')) / 100;
     const maxRange = parseFloat(aircraftData[2]);
     const economySeatsAvailable = parseInt(aircraftData[3]);
     const businessSeatsAvailable = parseInt(aircraftData[4]);
     const firstClassSeatsAvailable = parseInt(aircraftData[5]);
-    const totalSeats = (economySeatsAvailable + businessSeatsAvailable + firstClassSeatsAvailable);
-   
+    const totalSeats = economySeatsAvailable + businessSeatsAvailable + firstClassSeatsAvailable;
 
     // Validate aircraft range
     if (distance > maxRange) {
@@ -65,9 +64,9 @@ function validateAndCalculateProfit(flight, airports, aeroplanes) {
     }
 
     // Calculate income
-    const totalIncome = ((econSeats) * (econPrice)) +
-                        ((busSeats) * (busPrice)) +
-                        ((firstSeats) * (firstPrice));
+    const totalIncome = (parseInt(econSeats) * parseFloat(econPrice)) +
+                        (parseInt(busSeats) * parseFloat(busPrice)) +
+                        (parseInt(firstSeats) * parseFloat(firstPrice));
 
     // Calculate costs
     const costPerSeat = runningCost * distance;
@@ -78,16 +77,16 @@ function validateAndCalculateProfit(flight, airports, aeroplanes) {
 
     return {
         flightDetails: flight,
-        income: totalIncome,
-        cost: totalCost,
-        profit: profit,
+        income: totalIncome.toFixed(2),
+        cost: totalCost.toFixed(2),
+        profit: profit.toFixed(2),
     };
 }
 
 // Function to process flight data
 function processFlights(flights, airports, aeroplanes) {
     const results = [];
-    const errorMessages = []; // error messages for invalid flights
+    const errorMessages = []; // Store error messages for invalid flights
 
     flights.forEach(flight => {
         try {
@@ -103,7 +102,9 @@ function processFlights(flights, airports, aeroplanes) {
 
 // Function to write results to a text file
 function writeResultsToFile(results, filename) {
-    const output = results
+    const output = results.map(result => {
+        return `Flight: ${result.flightDetails.join(', ')} | Income: £${result.income} | Cost: £${result.cost} | Profit: £${result.profit}`;
+    }).join('\n');
 
     fs.writeFileSync(filename, output);
 }
@@ -123,7 +124,9 @@ function generateFlightReport() {
             const { results, errorMessages } = processFlights(validFlightData, airportsData, aeroplanesData);
             
             // Display valid flight results on screen
-            results.forEach(result)
+            results.forEach(result => {
+                console.log(`Valid Flight: ${result.flightDetails.join(', ')} | Income: £${result.income} | Cost: £${result.cost} | Profit: £${result.profit}`);
+            });
 
             // Write results to a text file
             writeResultsToFile(results, 'flight_profitability_report.txt');
@@ -132,9 +135,6 @@ function generateFlightReport() {
             if (errorMessages.length > 0) {
                 console.log("Errors encountered in valid flight processing:");
                 errorMessages.forEach(error => console.error(error));
-            }
-
-            
             }
         }
 
@@ -151,7 +151,7 @@ function generateFlightReport() {
         }
 
     } catch (err) {
-        console.error(err.message); // Handle any errors that occur
+        console.error(err.message); // Handle any errors that occur in main code
     }
 }
 
