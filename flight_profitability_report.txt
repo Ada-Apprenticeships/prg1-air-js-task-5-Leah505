@@ -1,9 +1,0 @@
-Flight: MAN, JFK, Large narrow body, 150, 12, 2, 399, 999, 1899 | Income: £75636.00 | Cost: £61716.48 | Profit: £13919.52
-Flight: LGW, ORY, Medium narrow body, 120, 8, 0, 150, 450, 0 | Income: £21600.00 | Cost: £3328.00 | Profit: £18272.00
-Flight: MAN, MAD, Medium wide body, 140, 18, 6, 250, 800, 1500 | Income: £58400.00 | Cost: £11767.00 | Profit: £46633.00
-Flight: LGW, AMS, Medium narrow body, 100, 6, 0, 120, 400, 0 | Income: £14400.00 | Cost: £3078.24 | Profit: £11321.76
-Flight: MAN, CAI, Large narrow body, 160, 18, 3, 450, 1100, 2000 | Income: £97800.00 | Cost: £47385.80 | Profit: £50414.20
-Flight: MAN, ORY, Medium narrow body, 110, 7, 0, 130, 420, 0 | Income: £17240.00 | Cost: £5709.60 | Profit: £11530.40
-Flight: LGW, MAD, Large narrow body, 165, 15, 4, 280, 850, 1800 | Income: £66150.00 | Cost: £15662.08 | Profit: £50487.92
-Flight: MAN, AMS, Medium narrow body, 90, 5, 0, 110, 350, 0 | Income: £11650.00 | Cost: £3686.00 | Profit: £7964.00
-Flight: LGW, CAI, Medium wide body, 180, 12, 4, 500, 1200, 2500 | Income: £114400.00 | Cost: £34241.20 | Profit: £80158.80

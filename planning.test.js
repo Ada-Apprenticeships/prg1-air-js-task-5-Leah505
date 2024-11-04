@@ -9,7 +9,6 @@ const {
 
 jest.mock('fs');
 
-// Mock data for tests
 const airportsData = [
   ["JFK", "John F Kennedy International", "5376", "5583"],
   ["ORY", "Paris-Orly", "610", "325"]
